@@ -1,184 +1,390 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JM Fútbol</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JM Fútbol</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            background-color: #168039;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
+body {
+    background: #168039;
+    font-family: Arial, sans-serif;
+    color: white;
+}
 
-        header {
-            background-color: #10652d;
-            text-align: center;
-            padding: 25px;
-        }
+header {
+    background: #10652d;
+    text-align: center;
+    padding: 25px;
+}
 
-        h1 {
-            font-size: 32px;
-        }
+h1 {
+    font-size: 32px;
+}
 
-        .dias {
-            padding: 15px;
-        }
+.dias {
+    padding: 15px;
+}
 
-        .dia {
-            display: block;
-            background-color: #10652d;
-            color: white;
-            text-decoration: none;
-            margin-bottom: 10px;
-            padding: 18px;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-        }
+.dia {
+    display: block;
+    background: #10652d;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+    padding: 18px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+}
 
-        .dia:hover {
-            background-color: #0b5123;
-        }
+.dia:hover {
+    background: #0b5123;
+}
 
-        .partidos {
-            display: none;
-            background-color: #f5f5f5;
-            color: #222;
-            margin-top: 10px;
-            padding: 15px;
-            border-radius: 6px;
-            font-weight: normal;
-        }
+.partidos {
+    display: none;
+    background: #f5f5f5;
+    color: #222;
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: normal;
+}
 
-        .partido {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 0;
-            border-bottom: 1px solid #ddd;
-        }
+.competicion {
+    color: #10652d;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 12px 0 6px;
+    border-bottom: 1px solid #ddd;
+}
 
-        .partido:last-child {
-            border-bottom: none;
-        }
+.partido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
 
-        .hora {
-            color: #10652d;
-            font-weight: bold;
-            white-space: nowrap;
-        }
+.partido:last-child {
+    border-bottom: none;
+}
 
-        .equipos {
-            text-align: right;
-            font-weight: bold;
-        }
-    </style>
+.hora {
+    color: #10652d;
+    font-weight: bold;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.equipos {
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nota {
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: normal;
+    color: #555;
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>JM Fútbol</h1>
-    </header>
+<header>
+    <h1>JM Fútbol</h1>
+</header>
 
-    <main class="dias">
+<main class="dias">
 
-        <a href="#lunes" class="dia"
-           onclick="mostrarDia(event, 'lunes')">
-            Lunes 5 de octubre
-            <div id="lunes" class="partidos">
-                No hay partidos cargados.
-            </div>
-        </a>
+<!-- LUNES 12 -->
 
-        <a href="#martes" class="dia"
-           onclick="mostrarDia(event, 'martes')">
-            Martes 6 de octubre
-            <div id="martes" class="partidos">
-                No hay partidos cargados.
-            </div>
-        </a>
+<a href="#lunes" class="dia"
+onclick="mostrarDia(event,'lunes')">
+Lunes 12 de octubre
 
-        <a href="#miercoles" class="dia"
-           onclick="mostrarDia(event, 'miercoles')">
-            Miércoles 7 de octubre
-            <div id="miercoles" class="partidos">
-                No hay partidos cargados.
-            </div>
-        </a>
+<div id="lunes" class="partidos">
 
-        <a href="#jueves" class="dia"
-           onclick="mostrarDia(event, 'jueves')">
-            Jueves 8 de octubre
-            <div id="jueves" class="partidos">
-                No hay partidos cargados.
-            </div>
-        </a>
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
 
-        <a href="#viernes" class="dia"
-           onclick="mostrarDia(event, 'viernes')">
-            Viernes 9 de octubre
-            <div id="viernes" class="partidos">
-                No hay partidos cargados.
-            </div>
-        </a>
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Lanús vs. Vélez</span>
+</div>
 
-        <a href="#sabado" class="dia"
-           onclick="mostrarDia(event, 'sabado')">
-            Sábado 10 de octubre
-            <div id="sabado" class="partidos">
-                <div class="partido">
-                    <span class="hora">21:30</span>
-                    <span class="equipos">
-                        River Plate vs. Estudiantes de Río Cuarto
-                    </span>
-                </div>
-            </div>
-        </a>
+<div class="partido">
+<span class="hora">18:30</span>
+<span class="equipos">Gimnasia de Mendoza vs. Newell's</span>
+</div>
 
-        <a href="#domingo" class="dia"
-           onclick="mostrarDia(event, 'domingo')">
-            Domingo 11 de octubre
-            <div id="domingo" class="partidos">
-                <div class="partido">
-                    <span class="hora">21:30</span>
-                    <span class="equipos">
-                        Talleres vs. Independiente
-                    </span>
-                </div>
-            </div>
-        </a>
+</div>
+</a>
 
-    </main>
+<!-- MARTES 13 -->
 
-    <script>
-        function mostrarDia(event, id) {
-            event.preventDefault();
+<a href="#martes" class="dia"
+onclick="mostrarDia(event,'martes')">
+Martes 13 de octubre
 
-            const seleccionado = document.getElementById(id);
-            const estabaAbierto =
-                seleccionado.style.display === "block";
+<div id="martes" class="partidos">
 
-            document.querySelectorAll(".partidos").forEach(
-                function (partidos) {
-                    partidos.style.display = "none";
-                }
-            );
+<div class="competicion">CHAMPIONS LEAGUE</div>
 
-            if (!estabaAbierto) {
-                seleccionado.style.display = "block";
-            }
-        }
-    </script>
+<div class="partido">
+<span class="hora">13:45</span>
+<span class="equipos">Lens vs. Sporting CP</span>
+</div>
+
+<div class="partido">
+<span class="hora">13:45</span>
+<span class="equipos">Sabah vs. Slavia Praga</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Arsenal vs. Lille</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Atlético de Madrid vs. Manchester United</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Inter vs. Club Brugge</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Galatasaray vs. Barcelona</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">RB Leipzig vs. PSV</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Viking vs. Bayern Múnich</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Villarreal vs. Napoli</span>
+</div>
+
+</div>
+</a>
+
+<!-- MIÉRCOLES 14 -->
+
+<a href="#miercoles" class="dia"
+onclick="mostrarDia(event,'miercoles')">
+Miércoles 14 de octubre
+
+<div id="miercoles" class="partidos">
+
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
+
+<div class="partido">
+<span class="hora">19:00</span>
+<span class="equipos">Sarmiento vs. River Plate</span>
+</div>
+
+<div class="competicion">CHAMPIONS LEAGUE</div>
+
+<div class="partido">
+<span class="hora">13:45</span>
+<span class="equipos">Feyenoord vs. Como</span>
+</div>
+
+<div class="partido">
+<span class="hora">13:45</span>
+<span class="equipos">LASK vs. Liverpool</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Roma vs. Real Madrid</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Aston Villa vs. Fenerbahçe</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Shakhtar Donetsk vs. AEK Atenas</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Bodø/Glimt vs. Borussia Dortmund</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Manchester City vs. PSG</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Real Betis vs. Porto</span>
+</div>
+
+<div class="partido">
+<span class="hora">16:00</span>
+<span class="equipos">Slovan Bratislava vs. Stuttgart</span>
+</div>
+
+</div>
+</a>
+
+<!-- JUEVES 15 -->
+
+<a href="#jueves" class="dia"
+onclick="mostrarDia(event,'jueves')">
+Jueves 15 de octubre
+
+<div id="jueves" class="partidos">
+
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
+
+<div class="partido">
+<span class="hora">20:00</span>
+<span class="equipos">Huracán vs. Gimnasia</span>
+</div>
+
+</div>
+</a>
+
+<!-- VIERNES 16 -->
+
+<a href="#viernes" class="dia"
+onclick="mostrarDia(event,'viernes')">
+Viernes 16 de octubre
+
+<div id="viernes" class="partidos">
+
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
+
+<div class="partido">
+<span class="hora">19:00</span>
+<span class="equipos">Defensa y Justicia vs. Instituto</span>
+</div>
+
+<div class="partido">
+<span class="hora">21:30</span>
+<span class="equipos">Boca Juniors vs. Talleres</span>
+</div>
+
+</div>
+</a>
+
+<!-- SÁBADO 17 -->
+
+<a href="#sabado" class="dia"
+onclick="mostrarDia(event,'sabado')">
+Sábado 17 de octubre
+
+<div id="sabado" class="partidos">
+
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
+
+<div class="partido">
+<span class="hora">15:00</span>
+<span class="equipos">Banfield vs. Argentinos Juniors</span>
+</div>
+
+<div class="partido">
+<span class="hora">17:30</span>
+<span class="equipos">Platense vs. Lanús</span>
+</div>
+
+<div class="partido">
+<span class="hora">17:30</span>
+<span class="equipos">Independiente Rivadavia vs. Tigre</span>
+</div>
+
+<div class="partido">
+<span class="hora">20:00</span>
+<span class="equipos">Vélez vs. Gimnasia de Mendoza</span>
+</div>
+
+<div class="partido">
+<span class="hora">20:00</span>
+<span class="equipos">Atlético Tucumán vs. Rosario Central</span>
+</div>
+
+</div>
+</a>
+
+<!-- DOMINGO 18 -->
+
+<a href="#domingo" class="dia"
+onclick="mostrarDia(event,'domingo')">
+Domingo 18 de octubre
+
+<div id="domingo" class="partidos">
+
+<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
+
+<div class="partido">
+<span class="hora">14:45</span>
+<span class="equipos">Racing Club vs. Independiente</span>
+</div>
+
+<div class="partido">
+<span class="hora">18:00</span>
+<span class="equipos">Estudiantes vs. San Lorenzo</span>
+</div>
+
+<div class="partido">
+<span class="hora">18:00</span>
+<span class="equipos">Estudiantes de Río Cuarto vs. Aldosivi</span>
+</div>
+
+<div class="partido">
+<span class="hora">20:15</span>
+<span class="equipos">Belgrano vs. River Plate</span>
+</div>
+
+</div>
+</a>
+
+</main>
+
+<script>
+function mostrarDia(event, id) {
+    event.preventDefault();
+
+    const seleccionado = document.getElementById(id);
+    const abierto = seleccionado.style.display === "block";
+
+    document.querySelectorAll(".partidos").forEach(function(partidos) {
+        partidos.style.display = "none";
+    });
+
+    if (!abierto) {
+        seleccionado.style.display = "block";
+    }
+}
+</script>
 
 </body>
 </html>
