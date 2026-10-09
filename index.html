@@ -1,487 +1,184 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071b13">
-<title>JM Fútbol | Pasión Argentina</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JM Fútbol</title>
 
-<style>
-:root {
-  --fondo: #071b13;
-  --panel: #10291e;
-  --verde: #16a05d;
-  --amarillo: #f6d743;
-  --blanco: #f5f7f5;
-  --gris: #aabbb0;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+        body {
+            background-color: #168039;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
 
-html { scroll-behavior: smooth; }
+        header {
+            background-color: #10652d;
+            text-align: center;
+            padding: 25px;
+        }
 
-body {
-  background: #f0f3f0;
-  color: #17241b;
-  font-family: Arial, Helvetica, sans-serif;
-}
+        h1 {
+            font-size: 32px;
+        }
 
-header {
-  background: var(--fondo);
-  color: white;
-  padding: 18px 6%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  border-bottom: 3px solid var(--verde);
-}
+        .dias {
+            padding: 15px;
+        }
 
-.logo {
-  font-size: 29px;
-  font-weight: 900;
-  letter-spacing: -1px;
-}
+        .dia {
+            display: block;
+            background-color: #10652d;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            padding: 18px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-.logo span { color: var(--amarillo); }
+        .dia:hover {
+            background-color: #0b5123;
+        }
 
-.sublogo {
-  color: var(--gris);
-  font-size: 11px;
-  margin-top: 4px;
-  letter-spacing: 2px;
-}
+        .partidos {
+            display: none;
+            background-color: #f5f5f5;
+            color: #222;
+            margin-top: 10px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: normal;
+        }
 
-nav {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+        .partido {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-}
+        .partido:last-child {
+            border-bottom: none;
+        }
 
-nav a:hover { color: var(--amarillo); }
+        .hora {
+            color: #10652d;
+            font-weight: bold;
+            white-space: nowrap;
+        }
 
-.portada {
-  background:
-    radial-gradient(ellipse at 80% 20%, #1d6842 0%, transparent 45%),
-    linear-gradient(120deg, #071b13, #123b27);
-  color: white;
-  padding: 65px 7%;
-}
-
-.etiqueta {
-  color: var(--amarillo);
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 17px;
-}
-
-.portada h1 {
-  font-size: clamp(36px, 7vw, 68px);
-  max-width: 750px;
-  line-height: 1.04;
-  margin-bottom: 18px;
-}
-
-.portada p {
-  color: #d0dfd4;
-  font-size: 17px;
-  max-width: 550px;
-  line-height: 1.6;
-}
-
-.boton {
-  display: inline-block;
-  margin-top: 25px;
-  background: var(--amarillo);
-  color: #142217;
-  border: none;
-  padding: 14px 22px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.boton:hover { background: white; }
-
-.ticker {
-  background: var(--amarillo);
-  padding: 13px 6%;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.contenedor {
-  width: 88%;
-  max-width: 1200px;
-  margin: 35px auto;
-}
-
-.titulo-seccion {
-  font-size: 25px;
-  margin-bottom: 8px;
-}
-
-.bajada {
-  color: #647269;
-  margin-bottom: 22px;
-  font-size: 14px;
-}
-
-.categorias {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
-
-.categoria {
-  border: 1px solid #d2dbd3;
-  padding: 10px 15px;
-  border-radius: 30px;
-  background: white;
-  cursor: pointer;
-  font-weight: bold;
-  color: #34473a;
-}
-
-.categoria.activa,
-.categoria:hover {
-  background: var(--fondo);
-  color: white;
-  border-color: var(--fondo);
-}
-
-.noticias {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.tarjeta {
-  background: white;
-  border-radius: 9px;
-  overflow: hidden;
-  border: 1px solid #e0e6e0;
-  box-shadow: 0 4px 15px #1225180a;
-  transition: transform .2s;
-}
-
-.tarjeta:hover { transform: translateY(-4px); }
-
-.imagen {
-  height: 150px;
-  background: linear-gradient(135deg, #102d20, #27794b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 65px;
-}
-
-.contenido-tarjeta { padding: 19px; }
-
-.tag {
-  color: #13834a;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.tarjeta h3 {
-  margin: 10px 0;
-  font-size: 19px;
-  line-height: 1.35;
-}
-
-.tarjeta p {
-  color: #68746b;
-  line-height: 1.55;
-  font-size: 14px;
-}
-
-.leer {
-  margin-top: 17px;
-  border: none;
-  background: none;
-  color: #117a43;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.sin-resultados {
-  display: none;
-  padding: 25px;
-  background: white;
-  border-radius: 8px;
-  margin-top: 15px;
-}
-
-.ligas {
-  background: var(--fondo);
-  color: white;
-  padding: 35px 6%;
-}
-
-.ligas h2 { margin-bottom: 22px; }
-
-.lista-ligas {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.liga {
-  background: #153526;
-  padding: 18px;
-  border-radius: 7px;
-  border: 1px solid #29543c;
-}
-
-.liga strong { display: block; margin-bottom: 7px; }
-.liga span { color: #b6c9bc; font-size: 13px; }
-
-.sobre {
-  background: white;
-  padding: 30px;
-  border-radius: 9px;
-  line-height: 1.7;
-}
-
-footer {
-  background: #04110b;
-  color: #b4c2b8;
-  text-align: center;
-  padding: 28px 15px;
-  font-size: 13px;
-}
-
-footer strong { color: white; }
-
-@media (max-width: 800px) {
-  .noticias { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .lista-ligas { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 520px) {
-  header { padding: 18px 5%; }
-  nav { gap: 14px; }
-  nav a { font-size: 12px; }
-  .portada { padding: 48px 6%; }
-  .contenedor { width: 90%; }
-  .noticias { grid-template-columns: 1fr; }
-  .imagen { height: 175px; }
-}
-</style>
+        .equipos {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <div>
-    <div class="logo">JM <span>FÚTBOL</span></div>
-    <div class="sublogo">LA PASIÓN DEL FÚTBOL ARGENTINO</div>
-  </div>
+    <header>
+        <h1>JM Fútbol</h1>
+    </header>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#noticias">Noticias</a>
-    <a href="#categorias">Categorías</a>
-    <a href="#nosotros">Nosotros</a>
-  </nav>
-</header>
+    <main class="dias">
 
-<section class="portada" id="inicio">
-  <div class="etiqueta">⚽ TU CASA, TU FÚTBOL</div>
-  <h1>El fútbol argentino se vive acá.</h1>
-  <p>
-    Noticias, actualidad y toda la pasión de nuestros clubes.
-    Desde Primera División hasta el ascenso y el fútbol del interior.
-  </p>
-  <a href="#noticias" class="boton">Explorar noticias →</a>
-</section>
+        <a href="#lunes" class="dia"
+           onclick="mostrarDia(event, 'lunes')">
+            Lunes 5 de octubre
+            <div id="lunes" class="partidos">
+                No hay partidos cargados.
+            </div>
+        </a>
 
-<div class="ticker">
-  JM FÚTBOL &nbsp; • &nbsp; PRIMERA DIVISIÓN &nbsp; • &nbsp;
-  ASCENSO &nbsp; • &nbsp; FEDERAL A &nbsp; • &nbsp; FÚTBOL DEL INTERIOR
-</div>
+        <a href="#martes" class="dia"
+           onclick="mostrarDia(event, 'martes')">
+            Martes 6 de octubre
+            <div id="martes" class="partidos">
+                No hay partidos cargados.
+            </div>
+        </a>
 
-<main>
-<section class="contenedor" id="noticias">
-  <h2 class="titulo-seccion">Últimas noticias</h2>
-  <p class="bajada">
-    Toda la actualidad del fútbol argentino en un solo lugar.
-  </p>
+        <a href="#miercoles" class="dia"
+           onclick="mostrarDia(event, 'miercoles')">
+            Miércoles 7 de octubre
+            <div id="miercoles" class="partidos">
+                No hay partidos cargados.
+            </div>
+        </a>
 
-  <div class="categorias" id="filtros">
-    <button class="categoria activa" data-filtro="Todas">Todas</button>
-    <button class="categoria" data-filtro="Primera">Primera División</button>
-    <button class="categoria" data-filtro="Ascenso">Ascenso</button>
-    <button class="categoria" data-filtro="Interior">Federal e interior</button>
-    <button class="categoria" data-filtro="Selección">Selección</button>
-  </div>
+        <a href="#jueves" class="dia"
+           onclick="mostrarDia(event, 'jueves')">
+            Jueves 8 de octubre
+            <div id="jueves" class="partidos">
+                No hay partidos cargados.
+            </div>
+        </a>
 
-  <div class="noticias" id="lista-noticias">
+        <a href="#viernes" class="dia"
+           onclick="mostrarDia(event, 'viernes')">
+            Viernes 9 de octubre
+            <div id="viernes" class="partidos">
+                No hay partidos cargados.
+            </div>
+        </a>
 
-    <article class="tarjeta" data-categoria="Primera">
-      <div class="imagen">🏆</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Primera División</div>
-        <h3>La lucha por la gloria en el fútbol argentino</h3>
-        <p>Todo lo que tenés que seguir de la máxima categoría de nuestro fútbol.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Agregá acá información verificada, declaraciones, estadísticas y novedades de los clubes.</p>
-      </div>
-    </article>
+        <a href="#sabado" class="dia"
+           onclick="mostrarDia(event, 'sabado')">
+            Sábado 10 de octubre
+            <div id="sabado" class="partidos">
+                <div class="partido">
+                    <span class="hora">21:30</span>
+                    <span class="equipos">
+                        River Plate vs. Estudiantes de Río Cuarto
+                    </span>
+                </div>
+            </div>
+        </a>
 
-    <article class="tarjeta" data-categoria="Ascenso">
-      <div class="imagen">🏟️</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Ascenso argentino</div>
-        <h3>El camino de los clubes que sueñan con ascender</h3>
-        <p>Seguimos de cerca las categorías del ascenso y sus protagonistas.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Completá esta noticia con resultados, posiciones y novedades confirmadas.</p>
-      </div>
-    </article>
+        <a href="#domingo" class="dia"
+           onclick="mostrarDia(event, 'domingo')">
+            Domingo 11 de octubre
+            <div id="domingo" class="partidos">
+                <div class="partido">
+                    <span class="hora">21:30</span>
+                    <span class="equipos">
+                        Talleres vs. Independiente
+                    </span>
+                </div>
+            </div>
+        </a>
 
-    <article class="tarjeta" data-categoria="Interior">
-      <div class="imagen">🌎</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Federal e interior</div>
-        <h3>El fútbol del interior también es protagonista</h3>
-        <p>Clubes, torneos regionales y toda la pasión de cada rincón del país.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Sumá acá novedades del Federal A, el Regional Amateur y las ligas regionales.</p>
-      </div>
-    </article>
+    </main>
 
-    <article class="tarjeta" data-categoria="Selección">
-      <div class="imagen">🇦🇷</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Selección argentina</div>
-        <h3>La Albiceleste y el sueño de seguir haciendo historia</h3>
-        <p>Información sobre la Selección, sus jugadores y sus competencias.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Agregá convocatorias, declaraciones y datos publicados por fuentes oficiales.</p>
-      </div>
-    </article>
+    <script>
+        function mostrarDia(event, id) {
+            event.preventDefault();
 
-    <article class="tarjeta" data-categoria="Primera">
-      <div class="imagen">🔄</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Mercado de pases</div>
-        <h3>Los movimientos de los clubes y sus planteles</h3>
-        <p>Altas, bajas, renovaciones y rumores, diferenciados de las confirmaciones.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Indicá siempre la fuente y si la operación está confirmada o sigue siendo un rumor.</p>
-      </div>
-    </article>
+            const seleccionado = document.getElementById(id);
+            const estabaAbierto =
+                seleccionado.style.display === "block";
 
-    <article class="tarjeta" data-categoria="Ascenso">
-      <div class="imagen">📊</div>
-      <div class="contenido-tarjeta">
-        <div class="tag">Resultados y tablas</div>
-        <h3>La pelea por los objetivos en cada categoría</h3>
-        <p>Seguí los resultados, las posiciones y las campañas de los equipos.</p>
-        <button class="leer" onclick="leerNoticia(this)">Leer más →</button>
-        <p class="detalle" hidden>Actualizá los resultados y las tablas con datos de fuentes confiables.</p>
-      </div>
-    </article>
+            document.querySelectorAll(".partidos").forEach(
+                function (partidos) {
+                    partidos.style.display = "none";
+                }
+            );
 
-  </div>
-
-  <p class="sin-resultados" id="sin-resultados">
-    No hay noticias en esta categoría.
-  </p>
-</section>
-
-<section class="ligas" id="categorias">
-  <h2>Todo nuestro fútbol</h2>
-  <div class="lista-ligas">
-    <div class="liga"><strong>🏆 Primera División</strong><span>La máxima categoría</span></div>
-    <div class="liga"><strong>⚽ Primera Nacional</strong><span>La segunda categoría</span></div>
-    <div class="liga"><strong>🥅 Primera B y C</strong><span>El ascenso metropolitano</span></div>
-    <div class="liga"><strong>🌎 Federal A</strong><span>El fútbol de las provincias</span></div>
-    <div class="liga"><strong>🏟️ Regional Amateur</strong><span>El sueño de todo el país</span></div>
-    <div class="liga"><strong>📍 Ligas regionales</strong><span>El fútbol de cada ciudad</span></div>
-    <div class="liga"><strong>🇦🇷 Selección</strong><span>La Albiceleste</span></div>
-    <div class="liga"><strong>👟 Inferiores</strong><span>El futuro del fútbol</span></div>
-  </div>
-</section>
-
-<section class="contenedor" id="nosotros">
-  <div class="sobre">
-    <h2>¿Qué es JM Fútbol?</h2>
-    <p>
-      Un espacio dedicado a informar sobre el fútbol argentino en todas
-      sus categorías. Queremos darles lugar a los clubes grandes, a los
-      equipos del ascenso y a las instituciones del interior.
-    </p>
-    <p>
-      <strong>JM Fútbol: todo el fútbol, una misma pasión.</strong>
-    </p>
-  </div>
-</section>
-</main>
-
-<footer>
-  <strong>JM FÚTBOL</strong>
-  <p style="margin-top:8px">La pasión del fútbol argentino.</p>
-  <p style="margin-top:8px">© <span id="anio"></span> JM Fútbol.</p>
-</footer>
-
-<script>
-document.querySelectorAll(".categoria").forEach(boton => {
-  boton.addEventListener("click", () => {
-    document.querySelectorAll(".categoria").forEach(b => {
-      b.classList.remove("activa");
-    });
-
-    boton.classList.add("activa");
-
-    const filtro = boton.dataset.filtro;
-    let visibles = 0;
-
-    document.querySelectorAll(".tarjeta").forEach(tarjeta => {
-      const mostrar =
-        filtro === "Todas" ||
-        tarjeta.dataset.categoria === filtro;
-
-      tarjeta.style.display = mostrar ? "" : "none";
-
-      if (mostrar) visibles++;
-    });
-
-    document.getElementById("sin-resultados").style.display =
-      visibles ? "none" : "block";
-  });
-});
-
-function leerNoticia(boton) {
-  const detalle = boton.nextElementSibling;
-  detalle.hidden = !detalle.hidden;
-  boton.textContent = detalle.hidden ? "Leer más →" : "Leer menos ↑";
-}
-
-document.getElementById("anio").textContent =
-  new Date().getFullYear();
-</script>
+            if (!estabaAbierto) {
+                seleccionado.style.display = "block";
+            }
+        }
+    </script>
 
 </body>
 </html>
