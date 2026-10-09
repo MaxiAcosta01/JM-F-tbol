@@ -1,390 +1,811 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JM Fútbol</title>
-
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --green: #159447;
+  --dark: #202a32;
+  --bg: #eef1f3;
+  --border: #dfe4e8;
 }
-
+* { box-sizing: border-box; }
 body {
-    background: #168039;
-    font-family: Arial, sans-serif;
-    color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: #20272d;
+  font-size: 14px;
 }
-
 header {
-    background: #10652d;
-    text-align: center;
-    padding: 25px;
+  background: var(--dark);
+  color: white;
+  border-bottom: 4px solid var(--green);
 }
-
-h1 {
-    font-size: 32px;
+.topbar {
+  max-width: 1250px;
+  margin: auto;
+  padding: 17px;
 }
-
-.dias {
-    padding: 15px;
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
-
-.dia {
-    display: block;
-    background: #10652d;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 10px;
-    padding: 18px;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: bold;
+.logo span { color: #38cf76; }
+.tagline {
+  font-size: 11px;
+  color: #c4cbd0;
+  margin-top: 4px;
 }
-
-.dia:hover {
-    background: #0b5123;
+nav {
+  background: #29343d;
+  overflow-x: auto;
 }
-
-.partidos {
-    display: none;
-    background: #f5f5f5;
-    color: #222;
-    margin-top: 12px;
+.nav-inner {
+  max-width: 1250px;
+  margin: auto;
+  display: flex;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+nav a {
+  color: #e4e9ed;
+  text-decoration: none;
+  padding: 14px 12px;
+  font-weight: bold;
+  font-size: 12px;
+}
+nav a.active, nav a:hover {
+  background: var(--green);
+  color: white;
+}
+.container {
+  max-width: 1250px;
+  margin: auto;
+  padding: 16px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr) 220px;
+  gap: 14px;
+  align-items: start;
+}
+.panel, .competition {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.panel-title, .competition-title {
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  padding: 12px;
+  font-weight: 800;
+}
+.panel-title {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.league {
+  padding: 12px;
+  border-bottom: 1px solid #edf0f2;
+  cursor: pointer;
+  font-weight: 600;
+}
+.league:hover, .league.selected {
+  background: #e9f8ee;
+  color: #087c36;
+}
+.section-heading {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+}
+.date-bar {
+  display: flex;
+  overflow-x: auto;
+  background: white;
+  border: 1px solid var(--border);
+  border-top: 0;
+}
+.date-btn {
+  flex: 1;
+  min-width: 58px;
+  padding: 10px 5px;
+  background: white;
+  border: 0;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 10px;
+  color: #555;
+}
+.date-btn strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.date-btn.active {
+  background: #e9f8ee;
+  color: #087c36;
+  box-shadow: inset 0 -3px var(--green);
+}
+.competition { margin-top: 12px; }
+.competition-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.match {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 9px;
+  border-bottom: 1px solid #edf0f2;
+}
+.match:last-child { border-bottom: 0; }
+.match-time {
+  text-align: center;
+  font-size: 11px;
+  color: #75808a;
+}
+.teams {
+  display: grid;
+  gap: 9px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.team {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+.team-name {
+  overflow-wrap: anywhere;
+}
+.crest {
+  width: 25px;
+  height: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #f1f3f5;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  color: #374151;
+}
+.crest img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.score {
+  text-align: center;
+  font-weight: bold;
+  line-height: 2;
+}
+.empty {
+  padding: 24px 14px;
+  text-align: center;
+  color: #75808a;
+  line-height: 1.6;
+}
+.shortcut {
+  padding: 12px;
+  border-bottom: 1px solid #edf0f2;
+  font-weight: 600;
+}
+.notice {
+  padding: 10px 12px;
+  color: #75808a;
+  font-size: 11px;
+  line-height: 1.5;
+  background: #fafbfc;
+  border-top: 1px solid #edf0f2;
+}
+footer {
+  text-align: center;
+  padding: 24px;
+  color: #75808a;
+  font-size: 11px;
+}
+@media(max-width:900px) {
+  .layout { grid-template-columns: 180px minmax(0, 1fr); }
+  .right-column { display: none; }
+}
+@media(max-width:600px) {
+  .container { padding: 8px; }
+  .layout { display: flex; flex-direction: column; gap: 6px; }
+  .left-column, .center-column { width: 100%; }
+  .left-column .panel { margin-bottom: 8px; }
+  .left-column .panel:first-child {
+    overflow-x: auto;
+  }
+  .left-column .league {
+    display: inline-flex;
+    border: 0;
     padding: 10px;
-    border-radius: 6px;
-    font-weight: normal;
-}
-
-.competicion {
-    color: #10652d;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 12px 0 6px;
-    border-bottom: 1px solid #ddd;
-}
-
-.partido {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.partido:last-child {
-    border-bottom: none;
-}
-
-.hora {
-    color: #10652d;
-    font-weight: bold;
     white-space: nowrap;
-    font-size: 14px;
-}
-
-.equipos {
-    text-align: right;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.nota {
-    padding: 10px 0;
-    font-size: 13px;
-    font-weight: normal;
-    color: #555;
+  }
+  .left-column .panel:not(:first-child) { display: none; }
+  .match {
+    grid-template-columns: 42px minmax(0, 1fr) 32px;
+    gap: 5px;
+    padding: 11px 7px;
+  }
+  .teams { font-size: 12px; }
+  .date-btn { min-width: 57px; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <h1>JM Fútbol</h1>
+  <div class="topbar">
+    <div class="logo">JM <span>FÚTBOL</span></div>
+    <div class="tagline">Todo el fútbol, en un solo lugar</div>
+  </div>
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="active" data-page="partidos">PARTIDOS</a>
+      <a href="#" data-page="ligas">LIGAS</a>
+      <a href="#" data-page="tablas">TABLAS</a>
+      <a href="#" data-page="equipos">EQUIPOS</a>
+      <a href="#" data-page="noticias">NOTICIAS</a>
+    </div>
+  </nav>
 </header>
 
-<main class="dias">
+<div class="container">
+  <div class="layout">
 
-<!-- LUNES 12 -->
+    <aside class="left-column">
+      <div class="panel">
+        <div class="panel-title">⚽ Competiciones</div>
+        <div class="league selected" data-league="Todas">🌎 Todas</div>
+        <div class="league" data-league="Liga Profesional">🇦🇷 Liga Profesional</div>
+        <div class="league" data-league="Primera Nacional">🇦🇷 Primera Nacional</div>
+        <div class="league" data-league="Primera B">🇦🇷 Primera B</div>
+        <div class="league" data-league="Federal A">🇦🇷 Federal A</div>
+        <div class="league" data-league="Champions League">🏆 Champions League</div>
+        <div class="league" data-league="Premier League">🏴 Premier League</div>
+        <div class="league" data-league="La Liga">🇪🇸 LaLiga</div>
+        <div class="league" data-league="Serie A">🇮🇹 Serie A</div>
+        <div class="league" data-league="Libertadores">🌎 Libertadores</div>
+        <div class="league" data-league="Sudamericana">🌎 Sudamericana</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Accesos rápidos</div>
+        <div class="shortcut">⚽ Resultados</div>
+        <div class="shortcut">📊 Posiciones</div>
+        <div class="shortcut">📅 Calendario</div>
+      </div>
+    </aside>
 
-<a href="#lunes" class="dia"
-onclick="mostrarDia(event,'lunes')">
-Lunes 12 de octubre
+    <main class="center-column">
+      <div class="section-heading">
+        <span id="heading">Partidos</span>
+        <span style="color:#159447">JM</span>
+      </div>
+      <div class="date-bar" id="dateBar"></div>
+      <div id="matchContent"></div>
+    </main>
 
-<div id="lunes" class="partidos">
+    <aside class="right-column">
+      <div class="panel">
+        <div class="panel-title">En directo</div>
+        <div class="empty">Los marcadores en vivo aparecerán cuando se conecte una fuente de datos.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Competiciones</div>
+        <div class="shortcut">🇦🇷 Fútbol argentino</div>
+        <div class="shortcut">🇪🇺 Fútbol europeo</div>
+        <div class="shortcut">🌎 Copas sudamericanas</div>
+      </div>
+    </aside>
 
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Lanús vs. Vélez</span>
+  </div>
 </div>
 
-<div class="partido">
-<span class="hora">18:30</span>
-<span class="equipos">Gimnasia de Mendoza vs. Newell's</span>
-</div>
-
-</div>
-</a>
-
-<!-- MARTES 13 -->
-
-<a href="#martes" class="dia"
-onclick="mostrarDia(event,'martes')">
-Martes 13 de octubre
-
-<div id="martes" class="partidos">
-
-<div class="competicion">CHAMPIONS LEAGUE</div>
-
-<div class="partido">
-<span class="hora">13:45</span>
-<span class="equipos">Lens vs. Sporting CP</span>
-</div>
-
-<div class="partido">
-<span class="hora">13:45</span>
-<span class="equipos">Sabah vs. Slavia Praga</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Arsenal vs. Lille</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Atlético de Madrid vs. Manchester United</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Inter vs. Club Brugge</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Galatasaray vs. Barcelona</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">RB Leipzig vs. PSV</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Viking vs. Bayern Múnich</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Villarreal vs. Napoli</span>
-</div>
-
-</div>
-</a>
-
-<!-- MIÉRCOLES 14 -->
-
-<a href="#miercoles" class="dia"
-onclick="mostrarDia(event,'miercoles')">
-Miércoles 14 de octubre
-
-<div id="miercoles" class="partidos">
-
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">19:00</span>
-<span class="equipos">Sarmiento vs. River Plate</span>
-</div>
-
-<div class="competicion">CHAMPIONS LEAGUE</div>
-
-<div class="partido">
-<span class="hora">13:45</span>
-<span class="equipos">Feyenoord vs. Como</span>
-</div>
-
-<div class="partido">
-<span class="hora">13:45</span>
-<span class="equipos">LASK vs. Liverpool</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Roma vs. Real Madrid</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Aston Villa vs. Fenerbahçe</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Shakhtar Donetsk vs. AEK Atenas</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Bodø/Glimt vs. Borussia Dortmund</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Manchester City vs. PSG</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Real Betis vs. Porto</span>
-</div>
-
-<div class="partido">
-<span class="hora">16:00</span>
-<span class="equipos">Slovan Bratislava vs. Stuttgart</span>
-</div>
-
-</div>
-</a>
-
-<!-- JUEVES 15 -->
-
-<a href="#jueves" class="dia"
-onclick="mostrarDia(event,'jueves')">
-Jueves 15 de octubre
-
-<div id="jueves" class="partidos">
-
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">20:00</span>
-<span class="equipos">Huracán vs. Gimnasia</span>
-</div>
-
-</div>
-</a>
-
-<!-- VIERNES 16 -->
-
-<a href="#viernes" class="dia"
-onclick="mostrarDia(event,'viernes')">
-Viernes 16 de octubre
-
-<div id="viernes" class="partidos">
-
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">19:00</span>
-<span class="equipos">Defensa y Justicia vs. Instituto</span>
-</div>
-
-<div class="partido">
-<span class="hora">21:30</span>
-<span class="equipos">Boca Juniors vs. Talleres</span>
-</div>
-
-</div>
-</a>
-
-<!-- SÁBADO 17 -->
-
-<a href="#sabado" class="dia"
-onclick="mostrarDia(event,'sabado')">
-Sábado 17 de octubre
-
-<div id="sabado" class="partidos">
-
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">15:00</span>
-<span class="equipos">Banfield vs. Argentinos Juniors</span>
-</div>
-
-<div class="partido">
-<span class="hora">17:30</span>
-<span class="equipos">Platense vs. Lanús</span>
-</div>
-
-<div class="partido">
-<span class="hora">17:30</span>
-<span class="equipos">Independiente Rivadavia vs. Tigre</span>
-</div>
-
-<div class="partido">
-<span class="hora">20:00</span>
-<span class="equipos">Vélez vs. Gimnasia de Mendoza</span>
-</div>
-
-<div class="partido">
-<span class="hora">20:00</span>
-<span class="equipos">Atlético Tucumán vs. Rosario Central</span>
-</div>
-
-</div>
-</a>
-
-<!-- DOMINGO 18 -->
-
-<a href="#domingo" class="dia"
-onclick="mostrarDia(event,'domingo')">
-Domingo 18 de octubre
-
-<div id="domingo" class="partidos">
-
-<div class="competicion">LIGA PROFESIONAL ARGENTINA</div>
-
-<div class="partido">
-<span class="hora">14:45</span>
-<span class="equipos">Racing Club vs. Independiente</span>
-</div>
-
-<div class="partido">
-<span class="hora">18:00</span>
-<span class="equipos">Estudiantes vs. San Lorenzo</span>
-</div>
-
-<div class="partido">
-<span class="hora">18:00</span>
-<span class="equipos">Estudiantes de Río Cuarto vs. Aldosivi</span>
-</div>
-
-<div class="partido">
-<span class="hora">20:15</span>
-<span class="equipos">Belgrano vs. River Plate</span>
-</div>
-
-</div>
-</a>
-
-</main>
+<footer>JM Fútbol · Portal de información futbolística</footer>
 
 <script>
-function mostrarDia(event, id) {
-    event.preventDefault();
+// Catálogo de nombres para buscar escudos.
+// Wikipedia puede devolver imágenes distintas del escudo oficial.
+// Si no encuentra una imagen, se muestran las iniciales.
 
-    const seleccionado = document.getElementById(id);
-    const abierto = seleccionado.style.display === "block";
+const clubPages = {
+  "Talleres": "Club Atlético Talleres",
+  "River Plate": "Club Atlético River Plate",
+  "Boca": "Club Atlético Boca Juniors",
+  "Boca Juniors": "Club Atlético Boca Juniors",
+  "Belgrano": "Club Atlético Belgrano",
+  "Instituto": "Instituto Atlético Central Córdoba",
+  "Independiente": "Club Atlético Independiente",
+  "Racing Club": "Racing Club de Avellaneda",
+  "San Lorenzo": "Club Atlético San Lorenzo de Almagro",
+  "Estudiantes": "Club Estudiantes de La Plata",
+  "Rosario Central": "Club Atlético Rosario Central",
+  "Newell's Old Boys": "Club Atlético Newell's Old Boys",
+  "Lanús": "Club Atlético Lanús",
+  "Vélez Sarsfield": "Club Atlético Vélez Sarsfield",
+  "Huracán": "Club Atlético Huracán",
+  "Banfield": "Club Atlético Banfield",
+  "Unión": "Club Atlético Unión",
+  "Gimnasia": "Club de Gimnasia y Esgrima La Plata",
+  "Argentinos Juniors": "Asociación Atlética Argentinos Juniors",
+  "Defensa y Justicia": "Club Social y Deportivo Defensa y Justicia",
+  "Arsenal": "Arsenal F.C.",
+  "Chelsea": "Chelsea F.C.",
+  "Liverpool": "Liverpool F.C.",
+  "Manchester City": "Manchester City F.C.",
+  "Manchester United": "Manchester United F.C.",
+  "Tottenham": "Tottenham Hotspur F.C.",
+  "Aston Villa": "Aston Villa F.C.",
+  "Newcastle": "Newcastle United F.C.",
+  "Brighton": "Brighton & Hove Albion F.C.",
+  "Everton": "Everton F.C.",
+  "Real Madrid": "Real Madrid CF",
+  "Barcelona": "FC Barcelona",
+  "Atlético de Madrid": "Atlético de Madrid",
+  "Sevilla": "Sevilla FC",
+  "Valencia": "Valencia CF",
+  "Villarreal": "Villarreal CF",
+  "Athletic Club": "Athletic Club",
+  "Real Sociedad": "Real Sociedad",
+  "Real Betis": "Real Betis",
+  "Getafe": "Getafe CF",
+  "Celta": "RC Celta de Vigo",
+  "Osasuna": "CA Osasuna",
+  "Inter": "Inter Milan",
+  "Milan": "AC Milan",
+  "Juventus": "Juventus FC",
+  "Napoli": "SSC Napoli",
+  "Roma": "AS Roma",
+  "Lazio": "SS Lazio",
+  "Fiorentina": "ACF Fiorentina",
+  "Atalanta": "Atalanta BC",
+  "Bologna": "Bologna FC 1909",
+  "Torino": "Torino FC",
+  "Genoa": "Genoa CFC",
+  "Parma": "Parma Calcio 1913",
+  "Cagliari": "Cagliari Calcio",
+  "Udinese": "Udinese Calcio",
+  "Bayern Múnich": "FC Bayern Munich",
+  "PSG": "Paris Saint-Germain F.C.",
+  "Porto": "FC Porto",
+  "Sporting CP": "Sporting CP",
+  "Lille": "Lille OSC",
+  "Club Brugge": "Club Brugge KV",
+  "Galatasaray": "Galatasaray S.K.",
+  "RB Leipzig": "RB Leipzig",
+  "PSV": "PSV Eindhoven",
+  "Feyenoord": "Feyenoord",
+  "Como": "Como 1907",
+  "Fenerbahçe": "Fenerbahçe S.K.",
+  "Shakhtar Donetsk": "FC Shakhtar Donetsk",
+  "Borussia Dortmund": "Borussia Dortmund",
+  "Slavia Praga": "SK Slavia Prague",
+  "Bournemouth": "AFC Bournemouth",
+  "Brentford": "Brentford F.C.",
+  "Leeds United": "Leeds United F.C.",
+  "Fulham": "Fulham F.C.",
+  "Sunderland": "Sunderland A.F.C.",
+  "Crystal Palace": "Crystal Palace F.C.",
+  "Nottingham Forest": "Nottingham Forest F.C.",
+  "Coventry City": "Coventry City F.C.",
+  "Hull City": "Hull City A.F.C.",
+  "Ipswich Town": "Ipswich Town F.C.",
+  "Lens": "RC Lens",
+  "LASK": "LASK",
+  "Viking": "Viking FK",
+  "Bodø/Glimt": "FK Bodø/Glimt",
+  "Sabah": "Sabah FC",
+  "Stuttgart": "VfB Stuttgart",
+  "AEK Atenas": "AEK Athens F.C.",
+  "Venezia": "Venezia FC",
+  "Monza": "AC Monza",
+  "Lecce": "US Lecce",
+  "Sassuolo": "US Sassuolo Calcio",
+  "Frosinone": "Frosinone Calcio",
+  "Elche": "Elche CF",
+  "Alavés": "Deportivo Alavés",
+  "Rayo Vallecano": "Rayo Vallecano",
+  "Espanyol": "RCD Espanyol",
+  "Málaga": "Málaga CF",
+  "Racing de Santander": "Racing de Santander",
+  "Deportivo La Coruña": "Deportivo de La Coruña",
+  "Levante": "Levante UD",
+  "Celta": "RC Celta de Vigo",
+  "Palmeiras": "Sociedade Esportiva Palmeiras",
+  "Fluminense": "Fluminense Football Club",
+  "Flamengo": "Clube de Regatas do Flamengo",
+  "Vasco da Gama": "Club de Regatas Vasco da Gama",
+  "Atlético Mineiro": "Clube Atlético Mineiro",
+  "Montevideo City Torque": "Montevideo City Torque"
+};
 
-    document.querySelectorAll(".partidos").forEach(function(partidos) {
-        partidos.style.display = "none";
+const logoCache = {};
+
+function initials(name) {
+  return name
+    .replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(word => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+function createCrest(name) {
+  const crest = document.createElement("span");
+  crest.className = "crest";
+  crest.title = "Escudo de " + name;
+  crest.textContent = initials(name);
+
+  const page = clubPages[name];
+  if (!page) return crest;
+
+  if (logoCache[name]) {
+    const img = document.createElement("img");
+    img.src = logoCache[name];
+    img.alt = "Escudo de " + name;
+    img.loading = "lazy";
+    img.onerror = () => {
+      img.remove();
+      crest.textContent = initials(name);
+    };
+    crest.textContent = "";
+    crest.appendChild(img);
+    return crest;
+  }
+
+  // Consulta la miniatura de la página del club en Wikipedia.
+  const api =
+    "https://en.wikipedia.org/w/api.php?action=query&format=json" +
+    "&prop=pageimages&piprop=thumbnail&pithumbsize=100&redirects=1&origin=*" +
+    "&titles=" + encodeURIComponent(page);
+
+  fetch(api)
+    .then(response => response.json())
+    .then(data => {
+      const pages = data.query && data.query.pages;
+      const result = pages && Object.values(pages)[0];
+      const url = result && result.thumbnail && result.thumbnail.source;
+
+      if (!url) return;
+
+      logoCache[name] = url;
+
+      if (!crest.isConnected) return;
+
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Escudo de " + name;
+      img.loading = "lazy";
+      img.onerror = () => {
+        img.remove();
+        crest.textContent = initials(name);
+      };
+      crest.textContent = "";
+      crest.appendChild(img);
+    })
+    .catch(() => {
+      crest.textContent = initials(name);
     });
 
-    if (!abierto) {
-        seleccionado.style.display = "block";
-    }
+  return crest;
 }
-</script>
 
+const matches = [
+  // LIGA PROFESIONAL — datos provisionales, revisar fixture oficial
+  {date:"2026-10-09",time:"14:30",league:"Liga Profesional",home:"Aldosivi",away:"Sarmiento"},
+  {date:"2026-10-09",time:"18:00",league:"Liga Profesional",home:"Gimnasia",away:"Atlético Tucumán"},
+  {date:"2026-10-09",time:"19:30",league:"Liga Profesional",home:"Instituto",away:"Boca"},
+  {date:"2026-10-09",time:"21:45",league:"Liga Profesional",home:"Unión",away:"Defensa y Justicia"},
+  {date:"2026-10-10",time:"15:45",league:"Liga Profesional",home:"Barracas Central",away:"Huracán"},
+  {date:"2026-10-10",time:"17:00",league:"Liga Profesional",home:"Central Córdoba",away:"Estudiantes"},
+  {date:"2026-10-10",time:"19:15",league:"Liga Profesional",home:"Tigre",away:"Banfield"},
+  {date:"2026-10-10",time:"21:30",league:"Liga Profesional",home:"River Plate",away:"Estudiantes de Río Cuarto"},
+  {date:"2026-10-11",time:"14:45",league:"Liga Profesional",home:"San Lorenzo",away:"Deportivo Riestra"},
+  {date:"2026-10-11",time:"17:00",league:"Liga Profesional",home:"Platense",away:"Argentinos Juniors"},
+  {date:"2026-10-11",time:"17:00",league:"Liga Profesional",home:"Rosario Central",away:"Independiente Rivadavia"},
+  {date:"2026-10-11",time:"19:15",league:"Liga Profesional",home:"Racing Club",away:"Belgrano"},
+  {date:"2026-10-11",time:"21:30",league:"Liga Profesional",home:"Talleres",away:"Independiente"},
+  {date:"2026-10-12",time:"16:00",league:"Liga Profesional",home:"Lanús",away:"Vélez Sarsfield"},
+  {date:"2026-10-12",time:"18:30",league:"Liga Profesional",home:"Gimnasia de Mendoza",away:"Newell's Old Boys"},
+  {date:"2026-10-14",time:"19:00",league:"Liga Profesional",home:"Sarmiento",away:"River Plate"},
+  {date:"2026-10-15",time:"20:00",league:"Liga Profesional",home:"Huracán",away:"Gimnasia"},
+  {date:"2026-10-16",time:"19:00",league:"Liga Profesional",home:"Defensa y Justicia",away:"Instituto"},
+  {date:"2026-10-16",time:"21:30",league:"Liga Profesional",home:"Boca",away:"Talleres"},
+  {date:"2026-10-17",time:"15:00",league:"Liga Profesional",home:"Banfield",away:"Argentinos Juniors"},
+  {date:"2026-10-17",time:"17:30",league:"Liga Profesional",home:"Platense",away:"Lanús"},
+  {date:"2026-10-17",time:"17:30",league:"Liga Profesional",home:"Independiente Rivadavia",away:"Tigre"},
+  {date:"2026-10-17",time:"20:00",league:"Liga Profesional",home:"Vélez Sarsfield",away:"Gimnasia de Mendoza"},
+  {date:"2026-10-17",time:"20:00",league:"Liga Profesional",home:"Atlético Tucumán",away:"Rosario Central"},
+  {date:"2026-10-18",time:"14:45",league:"Liga Profesional",home:"Racing Club",away:"Independiente"},
+  {date:"2026-10-18",time:"18:00",league:"Liga Profesional",home:"Estudiantes",away:"San Lorenzo"},
+  {date:"2026-10-18",time:"18:00",league:"Liga Profesional",home:"Estudiantes de Río Cuarto",away:"Aldosivi"},
+  {date:"2026-10-18",time:"20:15",league:"Liga Profesional",home:"Belgrano",away:"River Plate"},
+  {date:"2026-10-19",time:"19:00",league:"Liga Profesional",home:"Newell's Old Boys",away:"Central Córdoba"},
+  {date:"2026-10-19",time:"19:00",league:"Liga Profesional",home:"Sarmiento",away:"Barracas Central"},
+  {date:"2026-10-19",time:"21:15",league:"Liga Profesional",home:"Deportivo Riestra",away:"Unión"},
+
+  // CHAMPIONS LEAGUE
+  {date:"2026-10-13",time:"13:45",league:"Champions League",home:"Lens",away:"Sporting CP"},
+  {date:"2026-10-13",time:"13:45",league:"Champions League",home:"Sabah",away:"Slavia Praga"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Arsenal",away:"Lille"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Atlético de Madrid",away:"Manchester United"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Inter",away:"Club Brugge"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Galatasaray",away:"Barcelona"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"RB Leipzig",away:"PSV"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Viking",away:"Bayern Múnich"},
+  {date:"2026-10-13",time:"16:00",league:"Champions League",home:"Villarreal",away:"Napoli"},
+  {date:"2026-10-14",time:"13:45",league:"Champions League",home:"Feyenoord",away:"Como"},
+  {date:"2026-10-14",time:"13:45",league:"Champions League",home:"LASK",away:"Liverpool"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Roma",away:"Real Madrid"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Aston Villa",away:"Fenerbahçe"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Shakhtar Donetsk",away:"AEK Atenas"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Bodø/Glimt",away:"Borussia Dortmund"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Manchester City",away:"PSG"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Real Betis",away:"Porto"},
+  {date:"2026-10-14",time:"16:00",league:"Champions League",home:"Slovan Bratislava",away:"Stuttgart"},
+
+  // PREMIER LEAGUE
+  {date:"2026-10-10",time:"08:30",league:"Premier League",home:"Arsenal",away:"Leeds United"},
+  {date:"2026-10-10",time:"11:00",league:"Premier League",home:"Aston Villa",away:"Brentford"},
+  {date:"2026-10-10",time:"11:00",league:"Premier League",home:"Chelsea",away:"Bournemouth"},
+  {date:"2026-10-10",time:"11:00",league:"Premier League",home:"Ipswich Town",away:"Fulham"},
+  {date:"2026-10-10",time:"11:00",league:"Premier League",home:"Sunderland",away:"Brighton"},
+  {date:"2026-10-10",time:"13:30",league:"Premier League",home:"Manchester United",away:"Tottenham"},
+  {date:"2026-10-11",time:"10:00",league:"Premier League",home:"Crystal Palace",away:"Nottingham Forest"},
+  {date:"2026-10-11",time:"10:00",league:"Premier League",home:"Hull City",away:"Everton"},
+  {date:"2026-10-11",time:"12:30",league:"Premier League",home:"Liverpool",away:"Manchester City"},
+  {date:"2026-10-12",time:"17:00",league:"Premier League",home:"Coventry City",away:"Newcastle"},
+  {date:"2026-10-17",time:"08:30",league:"Premier League",home:"Everton",away:"Chelsea"},
+  {date:"2026-10-17",time:"11:00",league:"Premier League",home:"Brentford",away:"Liverpool"},
+  {date:"2026-10-17",time:"11:00",league:"Premier League",home:"Fulham",away:"Hull City"},
+  {date:"2026-10-17",time:"11:00",league:"Premier League",home:"Manchester City",away:"Ipswich Town"},
+  {date:"2026-10-17",time:"13:30",league:"Premier League",home:"Newcastle",away:"Aston Villa"},
+  {date:"2026-10-18",time:"10:00",league:"Premier League",home:"Bournemouth",away:"Sunderland"},
+  {date:"2026-10-18",time:"10:00",league:"Premier League",home:"Brighton",away:"Crystal Palace"},
+  {date:"2026-10-18",time:"10:00",league:"Premier League",home:"Leeds United",away:"Manchester United"},
+  {date:"2026-10-18",time:"12:30",league:"Premier League",home:"Nottingham Forest",away:"Arsenal"},
+  {date:"2026-10-19",time:"17:00",league:"Premier League",home:"Tottenham",away:"Coventry City"},
+
+  // LALIGA — datos provisionales
+  {date:"2026-10-10",time:"09:00",league:"La Liga",home:"Rayo Vallecano",away:"Athletic Club"},
+  {date:"2026-10-10",time:"11:15",league:"La Liga",home:"Alavés",away:"Atlético de Madrid"},
+  {date:"2026-10-10",time:"13:30",league:"La Liga",home:"Barcelona",away:"Getafe"},
+  {date:"2026-10-10",time:"16:00",league:"La Liga",home:"Real Madrid",away:"Villarreal"},
+  {date:"2026-10-11",time:"09:00",league:"La Liga",home:"Elche",away:"Celta"},
+  {date:"2026-10-11",time:"11:15",league:"La Liga",home:"Real Sociedad",away:"Deportivo La Coruña"},
+  {date:"2026-10-11",time:"13:30",league:"La Liga",home:"Real Betis",away:"Osasuna"},
+  {date:"2026-10-11",time:"16:00",league:"La Liga",home:"Racing de Santander",away:"Valencia"},
+  {date:"2026-10-12",time:"16:00",league:"La Liga",home:"Levante",away:"Sevilla"},
+  {date:"2026-10-17",time:"09:00",league:"La Liga",home:"Espanyol",away:"Atlético de Madrid"},
+  {date:"2026-10-17",time:"11:15",league:"La Liga",home:"Villarreal",away:"Elche"},
+  {date:"2026-10-17",time:"13:30",league:"La Liga",home:"Real Betis",away:"Barcelona"},
+  {date:"2026-10-17",time:"16:00",league:"La Liga",home:"Valencia",away:"Athletic Club"},
+  {date:"2026-10-18",time:"09:00",league:"La Liga",home:"Osasuna",away:"Racing de Santander"},
+  {date:"2026-10-18",time:"11:15",league:"La Liga",home:"Celta",away:"Alavés"},
+  {date:"2026-10-18",time:"13:30",league:"La Liga",home:"Málaga",away:"Real Sociedad"},
+  {date:"2026-10-18",time:"16:00",league:"La Liga",home:"Real Madrid",away:"Sevilla"},
+
+  // SERIE A — datos provisionales
+  {date:"2026-10-10",time:"10:00",league:"Serie A",home:"Genoa",away:"Fiorentina"},
+  {date:"2026-10-10",time:"13:00",league:"Serie A",home:"Inter",away:"Parma"},
+  {date:"2026-10-10",time:"15:45",league:"Serie A",home:"Napoli",away:"Frosinone"},
+  {date:"2026-10-11",time:"07:30",league:"Serie A",home:"Como",away:"Roma"},
+  {date:"2026-10-11",time:"10:00",league:"Serie A",home:"Lazio",away:"Monza"},
+  {date:"2026-10-11",time:"10:00",league:"Serie A",home:"Lecce",away:"Bologna"},
+  {date:"2026-10-11",time:"13:00",league:"Serie A",home:"Sassuolo",away:"Milan"},
+  {date:"2026-10-11",time:"15:45",league:"Serie A",home:"Cagliari",away:"Juventus"},
+  {date:"2026-10-12",time:"13:30",league:"Serie A",home:"Atalanta",away:"Venezia"},
+  {date:"2026-10-12",time:"15:45",league:"Serie A",home:"Torino",away:"Udinese"},
+  {date:"2026-10-16",time:"15:45",league:"Serie A",home:"Frosinone",away:"Sassuolo"},
+  {date:"2026-10-17",time:"10:00",league:"Serie A",home:"Venezia",away:"Napoli"},
+  {date:"2026-10-17",time:"13:00",league:"Serie A",home:"Bologna",away:"Inter"},
+  {date:"2026-10-17",time:"15:45",league:"Serie A",home:"Roma",away:"Genoa"},
+  {date:"2026-10-18",time:"07:30",league:"Serie A",home:"Udinese",away:"Lecce"},
+  {date:"2026-10-18",time:"10:00",league:"Serie A",home:"Fiorentina",away:"Como"},
+  {date:"2026-10-18",time:"13:00",league:"Serie A",home:"Milan",away:"Atalanta"},
+  {date:"2026-10-18",time:"15:45",league:"Serie A",home:"Juventus",away:"Lazio"},
+  {date:"2026-10-19",time:"13:30",league:"Serie A",home:"Monza",away:"Cagliari"},
+  {date:"2026-10-19",time:"15:45",league:"Serie A",home:"Parma",away:"Torino"},
+
+  // COPAS SUDAMERICANAS — revisar fixture oficial
+  {date:"2026-10-14",time:"21:30",league:"Libertadores",home:"Fluminense",away:"Palmeiras"},
+  {date:"2026-10-15",time:"21:30",league:"Libertadores",home:"Estudiantes",away:"Flamengo"},
+  {date:"2026-10-21",time:"21:30",league:"Libertadores",home:"Palmeiras",away:"Fluminense"},
+  {date:"2026-10-22",time:"21:30",league:"Libertadores",home:"Flamengo",away:"Estudiantes"},
+  {date:"2026-10-13",time:"21:30",league:"Sudamericana",home:"Boca Juniors",away:"Vasco da Gama"},
+  {date:"2026-10-14",time:"19:00",league:"Sudamericana",home:"Atlético Mineiro",away:"Montevideo City Torque"},
+  {date:"2026-10-20",time:"21:30",league:"Sudamericana",home:"Vasco da Gama",away:"Boca Juniors"},
+  {date:"2026-10-21",time:"19:00",league:"Sudamericana",home:"Montevideo City Torque",away:"Atlético Mineiro"}
+];
+
+const dateBar = document.getElementById("dateBar");
+const matchContent = document.getElementById("matchContent");
+const heading = document.getElementById("heading");
+
+let selectedDate = "2026-10-08";
+let selectedLeague = "Todas";
+let selectedPage = "partidos";
+
+function localDate(date) {
+  return date.getFullYear() + "-" +
+    String(date.getMonth() + 1).padStart(2, "0") + "-" +
+    String(date.getDate()).padStart(2, "0");
+}
+
+function renderDates() {
+  dateBar.innerHTML = "";
+  const start = new Date(2026, 9, 8, 12);
+  const end = new Date(2026, 9, 22, 12);
+  const days = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];
+
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    const current = new Date(d);
+    const key = localDate(current);
+    const button = document.createElement("button");
+    button.className = "date-btn" + (key === selectedDate ? " active" : "");
+    button.innerHTML = `<strong>${current.getDate()}</strong>${days[current.getDay()]}`;
+    button.addEventListener("click", () => {
+      selectedDate = key;
+      renderDates();
+      renderMatches();
+    });
+    dateBar.appendChild(button);
+  }
+}
+
+function renderMatches() {
+  matchContent.innerHTML = "";
+
+  if (selectedPage !== "partidos") {
+    const section = document.createElement("div");
+    section.className = "competition";
+    const title = document.createElement("div");
+    title.className = "competition-title";
+    title.textContent = heading.textContent;
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Esta sección todavía no tiene datos cargados.";
+    section.append(title, empty);
+    matchContent.appendChild(section);
+    return;
+  }
+
+  const list = matches.filter(match =>
+    match.date === selectedDate &&
+    (selectedLeague === "Todas" || match.league === selectedLeague)
+  );
+
+  if (!list.length) {
+    const section = document.createElement("div");
+    section.className = "competition";
+    const title = document.createElement("div");
+    title.className = "competition-title";
+    title.textContent = "⚽ " + (selectedLeague === "Todas" ? "Partidos" : selectedLeague);
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No hay partidos cargados para esta fecha y competición.";
+    section.append(title, empty);
+    matchContent.appendChild(section);
+    return;
+  }
+
+  const groups = {};
+  list.forEach(match => {
+    if (!groups[match.league]) groups[match.league] = [];
+    groups[match.league].push(match);
+  });
+
+  Object.entries(groups).forEach(([league, games]) => {
+    const section = document.createElement("div");
+    section.className = "competition";
+
+    const title = document.createElement("div");
+    title.className = "competition-title";
+    title.textContent = "⚽ " + league;
+    section.appendChild(title);
+
+    games.forEach(match => {
+      const row = document.createElement("div");
+      row.className = "match";
+
+      const time = document.createElement("div");
+      time.className = "match-time";
+      time.textContent = match.time;
+
+      const teams = document.createElement("div");
+      teams.className = "teams";
+
+      [match.home, match.away].forEach(name => {
+        const team = document.createElement("div");
+        team.className = "team";
+
+        const crest = createCrest(name);
+
+        const label = document.createElement("span");
+        label.className = "team-name";
+        label.textContent = name;
+
+        team.append(crest, label);
+        teams.appendChild(team);
+      });
+
+      const score = document.createElement("div");
+      score.className = "score";
+      score.textContent = match.score || "—";
+
+      row.append(time, teams, score);
+      section.appendChild(row);
+    });
+
+    matchContent.appendChild(section);
+  });
+
+  const notice = document.createElement("div");
+  notice.className = "notice";
+  notice.textContent =
+    "Calendario de demostración: verificá los horarios y partidos con las fuentes oficiales. Los escudos necesitan conexión a internet.";
+  matchContent.appendChild(notice);
+}
+
+document.querySelectorAll(".league").forEach(item => {
+  item.addEventListener("click", () => {
+    document.querySelectorAll(".league").forEach(el => el.classList.remove("selected"));
+    item.classList.add("selected");
+    selectedLeague = item.dataset.league;
+    selectedPage = "partidos";
+    heading.textContent = "Partidos";
+
+    document.querySelectorAll("nav a").forEach(link => {
+      link.classList.toggle("active", link.dataset.page === "partidos");
+    });
+
+    renderMatches();
+  });
+});
+
+document.querySelectorAll("nav a").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+    link.classList.add("active");
+
+    selectedPage = link.dataset.page;
+    const titles = {
+      partidos: "Partidos",
+      ligas: "Ligas",
+      tablas: "Tablas de posiciones",
+      equipos: "Equipos",
+      noticias: "Noticias"
+    };
+
+    heading.textContent = titles[selectedPage] || "Partidos";
+    renderMatches();
+  });
+});
+
+renderDates();
+renderMatches();
+</script>
 </body>
 </html>
